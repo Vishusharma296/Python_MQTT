@@ -1,0 +1,1 @@
+This folder contains the Python scripts for running on PCs and Single Board computers like Raspberry Pi. Paho MQTT Client libraray is used used for the clients, so installation of Paho client libraray is a prerequisite for successfully running these scripts.
