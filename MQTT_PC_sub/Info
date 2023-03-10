@@ -1,0 +1,2 @@
+This folder conatins the MQTT Subscribing client meant to be run on PC
+- Paho MQTT client library is required to run this script
