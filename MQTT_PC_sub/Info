@@ -1,2 +1,6 @@
-This folder conatins the MQTT Subscribing client meant to be run on PC
-- Paho MQTT client library is required to run this script
+This folder conatins the MQTT Subscribing Clients (Python scripts) meant to be run on on PCs and Single Board computers like Raspberry Pi.
+
+-> Paho MQTT Client libraray is used used for the clients, so installation of Paho client libraray is a prerequisite for successfully running these scripts.
+-> Mosquittu MQTT broker was used for these scripts.
+-> User credentials and MQTT server address need to be changed in these scripts according to your broker and the level of security used.
+-> When a script is logging data, please change the path of data in the script according to your local machine.
