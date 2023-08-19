@@ -1,7 +1,7 @@
 '''
    MQTT Publisher - pseudosensor
    This script publishes the simulated data from the host computer (raspberrypi 400)
-   Temperature, humidity and pressure data is published as seperate JSON strings
+   Temperature, humidity, pressure and C02 data is published as seperate JSON strings
    MQTT broker and publishing client are assumed to be running on the same machine.
 
 '''
@@ -39,9 +39,12 @@ while True:
     # Simulated data for temperature, humidity and pressure
     
     Sample_time = 30
-    Temp_range = uniform(14.0, 17.0)
-    Hum_range  = uniform(45.0, 52.0)
-    Press_range = uniform(.9, 1.1)
+    
+    Temp_range = uniform(14.0, 17.0)  # Celsius
+    Hum_range  = uniform(45.0, 52.0)  # percentage
+    Press_range = uniform(.9, 1.1)    # Bar
+    CO2_range = uniform(400, 500)     # PPM
+    
     Time_stamp = str(datetime.datetime.now())
     
     MQTT_msg_temp = {
@@ -66,14 +69,24 @@ while True:
         
         "Message Nr." : count,
         "DevEUI"      : "PRXX00103",
-        "Humidity"    : Press_range,
+        "Pressure"    : Press_range,
         "Location"    : "Berliner str 56",
+        "Time_stamp"  : Time_stamp
+        }
+    
+    MQTT_msg_CO2 = {
+        
+        "Message Nr." : count,
+        "DevEUI"      : "PRXX00104",
+        "CO2 level"   : CO2_range,
+        "Location"    : "Adolf Reichwin str 79",
         "Time_stamp"  : Time_stamp
         }
     
     JSON_msg_temp = json.dumps(MQTT_msg_temp, skipkeys = True, allow_nan = True, indent = 4)
     JSON_msg_hum = json.dumps(MQTT_msg_hum, skipkeys = True, allow_nan = True, indent = 4)
     JSON_msg_press = json.dumps(MQTT_msg_press, skipkeys = True, allow_nan = True, indent = 4)
+    JSON_msg_CO2 = json.dumps(MQTT_msg_CO2, skipkeys = True, allow_nan = True, indent = 4)
     
 # Publishing the pseudosensor data to different topics
     
@@ -84,11 +97,15 @@ while True:
     
     print("Message published to topic:  ", JSON_msg_hum)
     client.publish("Pseudo/humidity", JSON_msg_hum, 0)
-    
+     
     print("Message published to topic:  ", JSON_msg_press)
     client.publish("Pseudo/pressure", JSON_msg_press, 0)
+    
+    print("Message published to topic:  ", JSON_msg_CO2)
+    client.publish("Pseudo/pressure", JSON_msg_CO2, 0)
     
     count = count + 1
     time.sleep(Sample_time)
     
 
+ 
